@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
+                             http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+    <modelVersion>4.0.0</modelVersion>
+
+    <!-- ============================================================ -->
+    <!--  Identificação do projeto                                     -->
+    <!-- ============================================================ -->
+    <groupId>br.com.pdvmercado</groupId>
+    <artifactId>pdv-mercado</artifactId>
+    <version>1.0-SNAPSHOT</version>
+    <packaging>jar</packaging>
+
+    <name>PDV Mercado</name>
+    <description>Sistema de Ponto de Venda - Projeto Acadêmico de POO em Java (MVC)</description>
+
+    <!-- ============================================================ -->
+    <!--  Propriedades gerais                                          -->
+    <!-- ============================================================ -->
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <maven.compiler.source>11</maven.compiler.source>
+        <maven.compiler.target>11</maven.compiler.target>
+        <!-- Classe principal para o JAR executável -->
+        <mainClass>br.com.pdvmercado.Main</mainClass>
+    </properties>
+
+    <!-- ============================================================ -->
+    <!--  Dependências                                                  -->
+    <!-- ============================================================ -->
+    <dependencies>
+        <!-- Sem dependências externas: o projeto usa apenas Java SE (Swing) -->
+    </dependencies>
+
+    <!-- ============================================================ -->
+    <!--  Build                                                         -->
+    <!-- ============================================================ -->
+    <build>
+        <plugins>
+
+            <!-- Plugin de compilação -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.11.0</version>
+                <configuration>
+                    <source>${maven.compiler.source}</source>
+                    <target>${maven.compiler.target}</target>
+                    <encoding>${project.build.sourceEncoding}</encoding>
+                </configuration>
+            </plugin>
+
+            <!-- Plugin para gerar JAR executável (com Main-Class no MANIFEST) -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <version>3.3.0</version>
+                <configuration>
+                    <archive>
+                        <manifest>
+                            <mainClass>${mainClass}</mainClass>
+                        </manifest>
+                    </archive>
+                    <finalName>pdv-mercado</finalName>
+                </configuration>
+            </plugin>
+
+        </plugins>
+    </build>
+
+</project>
