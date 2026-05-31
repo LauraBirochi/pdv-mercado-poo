@@ -3,7 +3,9 @@ package br.com.pdvmercado.view;
 import br.com.pdvmercado.controller.SistemaController;
 import br.com.pdvmercado.model.Produto;
 import javax.swing.*;
+import javax.swing.plaf.basic.BasicButtonUI;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.DefaultTableCellRenderer;
 import java.awt.*;
 import java.util.ArrayList;
 
@@ -39,7 +41,7 @@ public class ProdutoView extends JFrame {
         setTitle("Gerenciamento de Produtos" + (ehGerente ? "" : " (Somente Leitura)"));
         setSize(750, 550);
         setLocationRelativeTo(null);
-        getContentPane().setBackground(new Color(28, 28, 42));
+        getContentPane().setBackground(new Color(25, 25, 38));
         setLayout(new BorderLayout(8, 8));
     }
 
@@ -48,7 +50,7 @@ public class ProdutoView extends JFrame {
         JPanel painelBusca = new JPanel(new FlowLayout(FlowLayout.LEFT, 10, 10));
         painelBusca.setBackground(new Color(35, 35, 52));
 
-        painelBusca.add(criarLabel("🔍 Buscar:"));
+        painelBusca.add(criarLabel("Buscar:"));
         campoBusca = new JTextField(20);
         estilizarCampo(campoBusca);
         painelBusca.add(campoBusca);
@@ -74,14 +76,21 @@ public class ProdutoView extends JFrame {
 
         tabelaProdutos = new JTable(modeloTabela);
         estilizarTabela(tabelaProdutos);
-        add(new JScrollPane(tabelaProdutos), BorderLayout.CENTER);
+        JScrollPane scrollPane = new JScrollPane(tabelaProdutos);
+        scrollPane.setBackground(new Color(25, 25, 38));
+        scrollPane.getViewport().setBackground(new Color(25, 25, 38));
+        
+        JPanel painelTabela = new JPanel(new BorderLayout());
+        painelTabela.setBackground(new Color(25, 25, 38));
+        painelTabela.add(scrollPane, BorderLayout.CENTER);
+        add(painelTabela, BorderLayout.CENTER);
 
         // --- Painel de cadastro (só visível para gerentes) ---
         if (ehGerente) {
             JPanel painelCadastro = criarPainelCadastro();
             add(painelCadastro, BorderLayout.SOUTH);
         } else {
-            JLabel aviso = new JLabel("ℹ️ Apenas gerentes podem cadastrar ou remover produtos.",
+            JLabel aviso = new JLabel("Apenas gerentes podem cadastrar ou remover produtos.",
                     SwingConstants.CENTER);
             aviso.setForeground(new Color(200, 160, 60));
             aviso.setFont(new Font("Arial", Font.ITALIC, 12));
@@ -95,7 +104,7 @@ public class ProdutoView extends JFrame {
         painel.setBackground(new Color(35, 35, 52));
         painel.setBorder(BorderFactory.createTitledBorder(
                 BorderFactory.createLineBorder(new Color(80, 80, 110)),
-                "➕ Cadastrar Produto",
+                "Cadastrar Produto",
                 0, 0, new Font("Arial", Font.BOLD, 12), new Color(150, 150, 200)));
 
         JPanel campos = new JPanel(new FlowLayout(FlowLayout.LEFT, 10, 10));
@@ -121,17 +130,17 @@ public class ProdutoView extends JFrame {
         JPanel botoes = new JPanel(new FlowLayout(FlowLayout.RIGHT, 10, 10));
         botoes.setOpaque(false);
 
-        JButton btnCadastrar = new JButton("💾 Cadastrar");
+        JButton btnCadastrar = new JButton("Cadastrar");
         estilizarBotao(btnCadastrar, new Color(60, 160, 90));
         btnCadastrar.addActionListener(e -> cadastrarProduto());
         botoes.add(btnCadastrar);
 
-        JButton btnRemover = new JButton("🗑️ Remover Selecionado");
+        JButton btnRemover = new JButton("Remover Selecionado");
         estilizarBotao(btnRemover, new Color(180, 60, 60));
         btnRemover.addActionListener(e -> removerProduto());
         botoes.add(btnRemover);
 
-        JButton btnReporEstoque = new JButton("📦 Repor Estoque");
+        JButton btnReporEstoque = new JButton("Repor Estoque");
         estilizarBotao(btnReporEstoque, new Color(80, 80, 180));
         btnReporEstoque.addActionListener(e -> reporEstoque());
         botoes.add(btnReporEstoque);
@@ -236,9 +245,23 @@ public class ProdutoView extends JFrame {
         tabela.setForeground(Color.WHITE);
         tabela.setFont(new Font("Arial", Font.PLAIN, 13));
         tabela.setRowHeight(26);
-        tabela.getTableHeader().setBackground(new Color(50, 80, 130));
-        tabela.getTableHeader().setForeground(Color.WHITE);
-        tabela.getTableHeader().setFont(new Font("Arial", Font.BOLD, 12));
+        
+        DefaultTableCellRenderer headerRenderer = new DefaultTableCellRenderer() {
+            @Override
+            public Component getTableCellRendererComponent(JTable table, Object value,
+                    boolean isSelected, boolean hasFocus, int row, int column) {
+                Component c = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+                c.setBackground(new Color(50, 80, 130));
+                c.setForeground(Color.WHITE);
+                c.setFont(new Font("Arial", Font.BOLD, 12));
+                return c;
+            }
+        };
+        
+        for (int i = 0; i < tabela.getColumnModel().getColumnCount(); i++) {
+            tabela.getColumnModel().getColumn(i).setHeaderRenderer(headerRenderer);
+        }
+        
         tabela.setGridColor(new Color(60, 60, 80));
     }
 
@@ -259,11 +282,15 @@ public class ProdutoView extends JFrame {
     }
 
     private void estilizarBotao(JButton b, Color cor) {
+        b.setUI(new BasicButtonUI());
+        b.setOpaque(true);
+        b.setContentAreaFilled(true);
+        b.setBorderPainted(false);
+        b.setFocusPainted(false);
         b.setBackground(cor);
         b.setForeground(Color.WHITE);
         b.setFont(new Font("Arial", Font.BOLD, 12));
         b.setBorder(BorderFactory.createEmptyBorder(7, 12, 7, 12));
         b.setCursor(new Cursor(Cursor.HAND_CURSOR));
-        b.setFocusPainted(false);
     }
 }
