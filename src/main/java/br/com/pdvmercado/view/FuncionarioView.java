@@ -5,7 +5,10 @@ import br.com.pdvmercado.model.Caixa;
 import br.com.pdvmercado.model.Gerente;
 import br.com.pdvmercado.model.Usuario;
 import javax.swing.*;
+import javax.swing.plaf.basic.BasicButtonUI;
+import javax.swing.plaf.basic.BasicComboBoxUI;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.DefaultTableCellRenderer;
 import java.awt.*;
 import java.util.ArrayList;
 
@@ -40,7 +43,7 @@ public class FuncionarioView extends JFrame {
         setTitle("Gerenciamento de Funcionários (Gerente)");
         setSize(720, 530);
         setLocationRelativeTo(null);
-        getContentPane().setBackground(new Color(28, 28, 42));
+        getContentPane().setBackground(new Color(25, 25, 38));
         setLayout(new BorderLayout(8, 8));
     }
 
@@ -54,7 +57,14 @@ public class FuncionarioView extends JFrame {
 
         tabelaFuncionarios = new JTable(modeloTabela);
         estilizarTabela(tabelaFuncionarios);
-        add(new JScrollPane(tabelaFuncionarios), BorderLayout.CENTER);
+        JScrollPane scrollPane = new JScrollPane(tabelaFuncionarios);
+        scrollPane.setBackground(new Color(25, 25, 38));
+        scrollPane.getViewport().setBackground(new Color(25, 25, 38));
+        
+        JPanel painelTabela = new JPanel(new BorderLayout());
+        painelTabela.setBackground(new Color(25, 25, 38));
+        painelTabela.add(scrollPane, BorderLayout.CENTER);
+        add(painelTabela, BorderLayout.CENTER);
 
         // --- Painel de cadastro ---
         JPanel painelCadastro = criarPainelCadastro();
@@ -66,7 +76,7 @@ public class FuncionarioView extends JFrame {
         painel.setBackground(new Color(35, 35, 52));
         painel.setBorder(BorderFactory.createTitledBorder(
                 BorderFactory.createLineBorder(new Color(80, 80, 110)),
-                "➕ Cadastrar Funcionário",
+                "Cadastrar Funcionário",
                 0, 0, new Font("Arial", Font.BOLD, 12), new Color(150, 150, 200)));
 
         JPanel campos = new JPanel(new FlowLayout(FlowLayout.LEFT, 8, 10));
@@ -89,8 +99,7 @@ public class FuncionarioView extends JFrame {
 
         campos.add(criarLabel("Perfil:"));
         comboPerfil = new JComboBox<>(new String[]{"CAIXA", "GERENTE"});
-        comboPerfil.setBackground(new Color(55, 55, 75));
-        comboPerfil.setForeground(Color.WHITE);
+        estilizarComboBox(comboPerfil);
         campos.add(comboPerfil);
 
         campos.add(criarLabel("Nº Caixa / Depto:"));
@@ -103,12 +112,12 @@ public class FuncionarioView extends JFrame {
         JPanel botoes = new JPanel(new FlowLayout(FlowLayout.RIGHT, 10, 10));
         botoes.setOpaque(false);
 
-        JButton btnCadastrar = new JButton("💾 Cadastrar");
+        JButton btnCadastrar = new JButton("Cadastrar");
         estilizarBotao(btnCadastrar, new Color(60, 160, 90));
         btnCadastrar.addActionListener(e -> cadastrarFuncionario());
         botoes.add(btnCadastrar);
 
-        JButton btnRemover = new JButton("🗑️ Remover");
+        JButton btnRemover = new JButton("Remover");
         estilizarBotao(btnRemover, new Color(180, 60, 60));
         btnRemover.addActionListener(e -> removerFuncionario());
         botoes.add(btnRemover);
@@ -207,9 +216,23 @@ public class FuncionarioView extends JFrame {
         tabela.setForeground(Color.WHITE);
         tabela.setFont(new Font("Arial", Font.PLAIN, 13));
         tabela.setRowHeight(26);
-        tabela.getTableHeader().setBackground(new Color(50, 80, 130));
-        tabela.getTableHeader().setForeground(Color.WHITE);
-        tabela.getTableHeader().setFont(new Font("Arial", Font.BOLD, 12));
+        
+        DefaultTableCellRenderer headerRenderer = new DefaultTableCellRenderer() {
+            @Override
+            public Component getTableCellRendererComponent(JTable table, Object value,
+                    boolean isSelected, boolean hasFocus, int row, int column) {
+                Component c = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+                c.setBackground(new Color(50, 80, 130));
+                c.setForeground(Color.WHITE);
+                c.setFont(new Font("Arial", Font.BOLD, 12));
+                return c;
+            }
+        };
+        
+        for (int i = 0; i < tabela.getColumnModel().getColumnCount(); i++) {
+            tabela.getColumnModel().getColumn(i).setHeaderRenderer(headerRenderer);
+        }
+        
         tabela.setGridColor(new Color(60, 60, 80));
     }
 
@@ -229,12 +252,40 @@ public class FuncionarioView extends JFrame {
                 BorderFactory.createEmptyBorder(4, 6, 4, 6)));
     }
 
+    private void estilizarComboBox(JComboBox<String> combo) {
+        combo.setUI(new BasicComboBoxUI());
+        combo.setBackground(new Color(55, 55, 75));
+        combo.setForeground(Color.WHITE);
+        combo.setOpaque(true);
+        
+        // Estilizar o renderer do combo box
+        DefaultListCellRenderer renderer = new DefaultListCellRenderer() {
+            @Override
+            public Component getListCellRendererComponent(JList<?> list, Object value,
+                    int index, boolean isSelected, boolean cellHasFocus) {
+                Component c = super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
+                if (isSelected) {
+                    c.setBackground(new Color(60, 120, 200));
+                } else {
+                    c.setBackground(new Color(45, 45, 65));
+                }
+                c.setForeground(Color.WHITE);
+                return c;
+            }
+        };
+        combo.setRenderer(renderer);
+    }
+
     private void estilizarBotao(JButton b, Color cor) {
+        b.setUI(new BasicButtonUI());
+        b.setOpaque(true);
+        b.setContentAreaFilled(true);
+        b.setBorderPainted(false);
+        b.setFocusPainted(false);
         b.setBackground(cor);
         b.setForeground(Color.WHITE);
         b.setFont(new Font("Arial", Font.BOLD, 12));
         b.setBorder(BorderFactory.createEmptyBorder(7, 12, 7, 12));
         b.setCursor(new Cursor(Cursor.HAND_CURSOR));
-        b.setFocusPainted(false);
     }
 }

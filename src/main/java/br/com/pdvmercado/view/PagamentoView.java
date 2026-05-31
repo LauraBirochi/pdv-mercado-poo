@@ -3,6 +3,7 @@ package br.com.pdvmercado.view;
 import br.com.pdvmercado.controller.SistemaController;
 import br.com.pdvmercado.model.*;
 import javax.swing.*;
+import javax.swing.plaf.basic.BasicButtonUI;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 
@@ -41,7 +42,7 @@ public class PagamentoView extends JDialog {
 
     // Construtor
     public PagamentoView(SistemaController sistemaController, CaixaView caixaView) {
-        super(caixaView, "💳 Pagamento", true); // Dialog modal
+        super(caixaView, "Pagamento", true); // Dialog modal
         this.sistemaController = sistemaController;
         this.caixaView = caixaView;
         this.totalVenda = sistemaController.getVendaController().getTotalCarrinho();
@@ -87,10 +88,10 @@ public class PagamentoView extends JDialog {
         // RadioButtons de forma de pagamento
         grupoPagamento = new ButtonGroup();
 
-        radioDinheiro = criarRadio("💵 Dinheiro");
-        radioCartaoDebito = criarRadio("💳 Cartão de Débito");
-        radioCartaoCredito = criarRadio("💳 Cartão de Crédito");
-        radioPix = criarRadio("📱 Pix");
+        radioDinheiro = criarRadio("Dinheiro");
+        radioCartaoDebito = criarRadio("Cartão de Débito");
+        radioCartaoCredito = criarRadio("Cartão de Crédito");
+        radioPix = criarRadio("Pix");
 
         grupoPagamento.add(radioDinheiro);
         grupoPagamento.add(radioCartaoDebito);
@@ -134,13 +135,13 @@ public class PagamentoView extends JDialog {
         JPanel painelBotoes = new JPanel(new FlowLayout(FlowLayout.CENTER, 15, 12));
         painelBotoes.setBackground(new Color(35, 35, 52));
 
-        JButton btnConfirmar = new JButton("✅ Confirmar Pagamento");
+        JButton btnConfirmar = new JButton("Confirmar Pagamento");
         estilizarBotao(btnConfirmar, new Color(60, 160, 90));
         btnConfirmar.setFont(new Font("Arial", Font.BOLD, 14));
         btnConfirmar.addActionListener(this::confirmarPagamento);
         painelBotoes.add(btnConfirmar);
 
-        JButton btnCancelar = new JButton("❌ Cancelar");
+        JButton btnCancelar = new JButton("Cancelar");
         estilizarBotao(btnCancelar, new Color(180, 60, 60));
         btnCancelar.addActionListener(e -> dispose());
         painelBotoes.add(btnCancelar);
@@ -240,7 +241,7 @@ public class PagamentoView extends JDialog {
             String cupom = sistemaController.getVendaController().finalizarVenda();
 
             // Exibe o cupom/resultado
-            JOptionPane.showMessageDialog(this, cupom, "✅ Venda Finalizada",
+            JOptionPane.showMessageDialog(this, cupom, "Venda Finalizada",
                     JOptionPane.INFORMATION_MESSAGE);
 
             // Fecha o dialog e avisa o CaixaView
@@ -287,11 +288,15 @@ public class PagamentoView extends JDialog {
     }
 
     private void estilizarBotao(JButton botao, Color cor) {
+        botao.setUI(new BasicButtonUI());
+        botao.setOpaque(true);
+        botao.setContentAreaFilled(true);
+        botao.setBorderPainted(false);
+        botao.setFocusPainted(false);
         botao.setBackground(cor);
         botao.setForeground(Color.WHITE);
         botao.setFont(new Font("Arial", Font.BOLD, 12));
         botao.setBorder(BorderFactory.createEmptyBorder(9, 18, 9, 18));
         botao.setCursor(new Cursor(Cursor.HAND_CURSOR));
-        botao.setFocusPainted(false);
     }
 }

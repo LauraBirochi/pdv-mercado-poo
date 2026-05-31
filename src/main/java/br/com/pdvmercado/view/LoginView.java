@@ -2,6 +2,7 @@ package br.com.pdvmercado.view;
 
 import br.com.pdvmercado.controller.SistemaController;
 import javax.swing.*;
+import javax.swing.plaf.basic.BasicButtonUI;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 
@@ -33,9 +34,7 @@ public class LoginView extends JFrame {
         criarComponentes();
     }
 
-    // =============================================
     // CONFIGURAÇÃO DA JANELA
-    // =============================================
 
     private void configurarJanela() {
         setTitle("PDV Mercado - Login");
@@ -47,17 +46,15 @@ public class LoginView extends JFrame {
         setLayout(new BorderLayout());
     }
 
-    // =============================================
     // CRIAÇÃO DOS COMPONENTES
-    // =============================================
 
     private void criarComponentes() {
-        // --- Painel do título ---
+        // Painel do título
         JPanel painelTitulo = new JPanel();
         painelTitulo.setBackground(new Color(30, 30, 45));
         painelTitulo.setBorder(BorderFactory.createEmptyBorder(25, 0, 10, 0));
 
-        JLabel titulo = new JLabel("🛒 PDV MERCADO");
+        JLabel titulo = new JLabel("PDV MERCADO");
         titulo.setFont(new Font("Arial", Font.BOLD, 22));
         titulo.setForeground(new Color(100, 200, 120));
         painelTitulo.add(titulo);
@@ -70,7 +67,7 @@ public class LoginView extends JFrame {
         subtitulo.setAlignmentX(Component.CENTER_ALIGNMENT);
         painelTitulo.add(subtitulo);
 
-        // --- Painel central com campos ---
+        // Painel central com campos 
         JPanel painelCentral = new JPanel(new GridBagLayout());
         painelCentral.setBackground(new Color(40, 40, 58));
         painelCentral.setBorder(BorderFactory.createEmptyBorder(20, 40, 20, 40));
@@ -110,7 +107,7 @@ public class LoginView extends JFrame {
         // Botão Entrar
         gbc.gridx = 0; gbc.gridy = 2; gbc.gridwidth = 2; gbc.weightx = 0;
         botaoEntrar = new JButton("ENTRAR");
-        estilizarBotao(botaoEntrar, new Color(60, 160, 90));
+        estilizarBotao(botaoEntrar, new Color(100, 200, 120));
         botaoEntrar.addActionListener(this::realizarLogin);
         painelCentral.add(botaoEntrar, gbc);
 
@@ -183,18 +180,22 @@ public class LoginView extends JFrame {
     private void estilizarCampo(JTextField campo) {
         campo.setBackground(new Color(55, 55, 75));
         campo.setForeground(Color.WHITE);
-        campo.setCaretColor(Color.WHITE);
+        campo.setCaretColor(new Color(0, 0, 0));
         campo.setBorder(BorderFactory.createCompoundBorder(
                 BorderFactory.createLineBorder(new Color(80, 80, 100)),
                 BorderFactory.createEmptyBorder(5, 8, 5, 8)));
     }
 
     private void estilizarBotao(JButton botao, Color cor) {
+        botao.setUI(new BasicButtonUI());
+        botao.setOpaque(true);
+        botao.setContentAreaFilled(true);
+        botao.setBorderPainted(false);
+        botao.setFocusPainted(false);
         botao.setBackground(cor);
         botao.setForeground(Color.WHITE);
         botao.setFont(new Font("Arial", Font.BOLD, 13));
         botao.setBorder(BorderFactory.createEmptyBorder(10, 20, 10, 20));
         botao.setCursor(new Cursor(Cursor.HAND_CURSOR));
-        botao.setFocusPainted(false);
     }
 }

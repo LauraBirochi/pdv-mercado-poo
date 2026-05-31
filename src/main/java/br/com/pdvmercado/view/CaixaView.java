@@ -3,7 +3,9 @@ package br.com.pdvmercado.view;
 import br.com.pdvmercado.controller.SistemaController;
 import br.com.pdvmercado.model.*;
 import javax.swing.*;
+import javax.swing.plaf.basic.BasicButtonUI;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.DefaultTableCellRenderer;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.util.ArrayList;
@@ -85,7 +87,7 @@ public class CaixaView extends JFrame {
         painel.setBackground(new Color(35, 35, 52));
         painel.setBorder(BorderFactory.createEmptyBorder(12, 20, 12, 20));
 
-        JLabel titulo = new JLabel("🛒 PDV MERCADO");
+        JLabel titulo = new JLabel("PDV MERCADO");
         titulo.setFont(new Font("Arial", Font.BOLD, 20));
         titulo.setForeground(new Color(100, 200, 120));
         painel.add(titulo, BorderLayout.WEST);
@@ -105,7 +107,7 @@ public class CaixaView extends JFrame {
         painel.setBackground(new Color(35, 35, 52));
         painel.setBorder(BorderFactory.createTitledBorder(
                 BorderFactory.createLineBorder(new Color(80, 80, 110)),
-                "🔍 Buscar Produto",
+                "Buscar Produto",
                 0, 0, new Font("Arial", Font.BOLD, 12), new Color(150, 150, 200)));
         painel.setPreferredSize(new Dimension(260, 0));
 
@@ -149,7 +151,7 @@ public class CaixaView extends JFrame {
         painel.add(painelQtd);
 
         // Botão adicionar ao carrinho
-        JButton botaoAdicionar = new JButton("➕ Adicionar ao Carrinho");
+        JButton botaoAdicionar = new JButton("Adicionar ao Carrinho");
         estilizarBotao(botaoAdicionar, new Color(60, 160, 90));
         botaoAdicionar.setAlignmentX(Component.CENTER_ALIGNMENT);
         botaoAdicionar.addActionListener(e -> adicionarAoCarrinho());
@@ -166,7 +168,7 @@ public class CaixaView extends JFrame {
         painel.setBackground(new Color(30, 30, 45));
         painel.setBorder(BorderFactory.createTitledBorder(
                 BorderFactory.createLineBorder(new Color(80, 80, 110)),
-                "🛒 Carrinho de Compras",
+                "Carrinho de Compras",
                 0, 0, new Font("Arial", Font.BOLD, 12), new Color(150, 150, 200)));
 
         // Tabela do carrinho
@@ -183,9 +185,23 @@ public class CaixaView extends JFrame {
         tabelaCarrinho.setForeground(Color.WHITE);
         tabelaCarrinho.setFont(new Font("Arial", Font.PLAIN, 13));
         tabelaCarrinho.setRowHeight(28);
-        tabelaCarrinho.getTableHeader().setBackground(new Color(50, 80, 130));
-        tabelaCarrinho.getTableHeader().setForeground(Color.WHITE);
-        tabelaCarrinho.getTableHeader().setFont(new Font("Arial", Font.BOLD, 12));
+        
+        DefaultTableCellRenderer headerRenderer = new DefaultTableCellRenderer() {
+            @Override
+            public Component getTableCellRendererComponent(JTable table, Object value,
+                    boolean isSelected, boolean hasFocus, int row, int column) {
+                Component c = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+                c.setBackground(new Color(50, 80, 130));
+                c.setForeground(Color.WHITE);
+                c.setFont(new Font("Arial", Font.BOLD, 12));
+                return c;
+            }
+        };
+        
+        for (int i = 0; i < tabelaCarrinho.getColumnModel().getColumnCount(); i++) {
+            tabelaCarrinho.getColumnModel().getColumn(i).setHeaderRenderer(headerRenderer);
+        }
+        
         tabelaCarrinho.setSelectionBackground(new Color(60, 100, 160));
         tabelaCarrinho.setGridColor(new Color(60, 60, 80));
 
@@ -198,7 +214,7 @@ public class CaixaView extends JFrame {
         painelTotal.setBackground(new Color(35, 35, 52));
         painelTotal.setBorder(BorderFactory.createEmptyBorder(8, 10, 8, 10));
 
-        JButton btnRemover = new JButton("❌ Remover Item");
+        JButton btnRemover = new JButton("Remover Item");
         estilizarBotao(btnRemover, new Color(180, 60, 60));
         btnRemover.addActionListener(e -> removerItemCarrinho());
         painelTotal.add(btnRemover);
@@ -218,19 +234,19 @@ public class CaixaView extends JFrame {
         painel.setBackground(new Color(35, 35, 52));
         painel.setBorder(BorderFactory.createEmptyBorder(5, 10, 10, 10));
 
-        JButton btnPagamento = new JButton("💳 Pagamento");
+        JButton btnPagamento = new JButton("Pagamento");
         estilizarBotao(btnPagamento, new Color(70, 130, 200));
         btnPagamento.setFont(new Font("Arial", Font.BOLD, 14));
         btnPagamento.addActionListener(e -> abrirPagamento());
         painel.add(btnPagamento);
 
-        JButton btnCancelar = new JButton("🗑️ Cancelar Venda");
+        JButton btnCancelar = new JButton("Cancelar Venda");
         estilizarBotao(btnCancelar, new Color(180, 60, 60));
         btnCancelar.setFont(new Font("Arial", Font.BOLD, 14));
         btnCancelar.addActionListener(e -> cancelarVenda());
         painel.add(btnCancelar);
 
-        JButton btnFecharCaixa = new JButton("🔒 Fechar Caixa");
+        JButton btnFecharCaixa = new JButton("Fechar Caixa");
         estilizarBotao(btnFecharCaixa, new Color(120, 80, 180));
         btnFecharCaixa.setFont(new Font("Arial", Font.BOLD, 14));
         btnFecharCaixa.addActionListener(e -> fecharCaixa());
@@ -240,19 +256,97 @@ public class CaixaView extends JFrame {
     }
 
     private void criarMenuNavegacao() {
-        JMenuBar menuBar = new JMenuBar();
-        menuBar.setBackground(new Color(35, 35, 52));
+        Color fundoEscuro = new Color(25, 25, 38);
+        Color textoVerde = new Color(150, 255, 150);
+        Color textoRed = new Color(255, 100, 100);
+        Color fundoItem = new Color(30, 30, 45);
+        
+        JMenuBar menuBar = new JMenuBar() {
+            @Override
+            protected void paintComponent(Graphics g) {
+                g.setColor(fundoEscuro);
+                g.fillRect(0, 0, getWidth(), getHeight());
+            }
+            
+            @Override
+            public void paint(Graphics g) {
+                g.setColor(fundoEscuro);
+                g.fillRect(0, 0, getWidth(), getHeight());
+                super.paint(g);
+            }
+        };
+        menuBar.setBackground(fundoEscuro);
+        menuBar.setForeground(Color.WHITE);
+        menuBar.setOpaque(true);
+        menuBar.setBorder(null);
 
-        JMenu menuSistema = new JMenu("Sistema");
-        menuSistema.setForeground(Color.WHITE);
+        JMenu menuSistema = new JMenu("Sistema") {
+            @Override
+            protected void paintComponent(Graphics g) {
+                g.setColor(fundoEscuro);
+                g.fillRect(0, 0, getWidth(), getHeight());
+                super.paintComponent(g);
+            }
+            
+            @Override
+            public void paint(Graphics g) {
+                g.setColor(fundoEscuro);
+                g.fillRect(0, 0, getWidth(), getHeight());
+                setForeground(textoVerde);
+                super.paint(g);
+            }
+        };
+        menuSistema.setForeground(textoVerde);
+        menuSistema.setBackground(fundoEscuro);
+        menuSistema.setOpaque(true);
+        menuSistema.setBorder(null);
 
-        JMenuItem itemProdutos = new JMenuItem("📦 Gerenciar Produtos");
+        JMenuItem itemProdutos = new JMenuItem("Gerenciar Produtos") {
+            @Override
+            public void paint(Graphics g) {
+                g.setColor(fundoItem);
+                g.fillRect(0, 0, getWidth(), getHeight());
+                setBackground(fundoItem);
+                setForeground(new Color(200, 255, 200));
+                super.paint(g);
+            }
+        };
+        itemProdutos.setBackground(fundoItem);
+        itemProdutos.setForeground(new Color(200, 255, 200));
+        itemProdutos.setOpaque(true);
+        itemProdutos.setBorder(null);
         itemProdutos.addActionListener(e -> abrirGerenciamentoProdutos());
 
-        JMenuItem itemFuncionarios = new JMenuItem("👥 Gerenciar Funcionários");
+        JMenuItem itemFuncionarios = new JMenuItem("Gerenciar Funcionários") {
+            @Override
+            public void paint(Graphics g) {
+                g.setColor(fundoItem);
+                g.fillRect(0, 0, getWidth(), getHeight());
+                setBackground(fundoItem);
+                setForeground(new Color(200, 255, 200));
+                super.paint(g);
+            }
+        };
+        itemFuncionarios.setBackground(fundoItem);
+        itemFuncionarios.setForeground(new Color(200, 255, 200));
+        itemFuncionarios.setOpaque(true);
+        itemFuncionarios.setBorder(null);
         itemFuncionarios.addActionListener(e -> abrirGerenciamentoFuncionarios());
 
-        JMenuItem itemLogout = new JMenuItem("🚪 Logout");
+        JMenuItem itemLogout = new JMenuItem("Logout") {
+            @Override
+            public void paint(Graphics g) {
+                g.setColor(fundoItem);
+                g.fillRect(0, 0, getWidth(), getHeight());
+                setBackground(fundoItem);
+                setForeground(textoRed);
+                super.paint(g);
+            }
+        };
+        itemLogout.setBackground(fundoItem);
+        itemLogout.setForeground(textoRed);
+        itemLogout.setOpaque(true);
+        itemLogout.setBorder(null);
         itemLogout.addActionListener(e -> realizarLogout());
 
         menuSistema.add(itemProdutos);
@@ -441,11 +535,15 @@ public class CaixaView extends JFrame {
     }
 
     private void estilizarBotao(JButton botao, Color cor) {
+        botao.setUI(new BasicButtonUI());
+        botao.setOpaque(true);
+        botao.setContentAreaFilled(true);
+        botao.setBorderPainted(false);
+        botao.setFocusPainted(false);
         botao.setBackground(cor);
         botao.setForeground(Color.WHITE);
         botao.setFont(new Font("Arial", Font.BOLD, 12));
         botao.setBorder(BorderFactory.createEmptyBorder(8, 15, 8, 15));
         botao.setCursor(new Cursor(Cursor.HAND_CURSOR));
-        botao.setFocusPainted(false);
     }
 }
