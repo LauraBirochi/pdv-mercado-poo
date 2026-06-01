@@ -252,6 +252,9 @@ public class PagamentoView extends JDialog {
             JOptionPane.showMessageDialog(this,
                     "Valor inválido! Verifique os campos de pagamento.",
                     "Erro", JOptionPane.ERROR_MESSAGE);
+        } catch (IllegalArgumentException ex) {
+            JOptionPane.showMessageDialog(this,
+                    ex.getMessage(), "Aviso de Validação", JOptionPane.WARNING_MESSAGE);
         } catch (IllegalStateException ex) {
             JOptionPane.showMessageDialog(this,
                     "Erro: " + ex.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);

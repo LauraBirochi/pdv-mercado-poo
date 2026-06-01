@@ -1,35 +1,20 @@
 package br.com.pdvmercado.model;
 
-/**
- * Subclasse PagamentoCartao - herda de Pagamento
- *
- * Conceito de POO aplicado: HERANÇA + POLIMORFISMO
- * Implementa o processamento específico do pagamento com cartão,
- * incluindo suporte a parcelamento.
- */
 public class PagamentoCartao extends Pagamento {
 
-    // Atributos específicos do pagamento com cartão
-    private String tipoCartao;   // "DEBITO" ou "CREDITO"
+    private String tipoCartao;  
     private int numeroParcelas;
     private String ultimos4Digitos;
 
-    // Construtor
     public PagamentoCartao(double valor, String tipoCartao, int numeroParcelas, String ultimos4Digitos) {
         super(valor, "Pagamento com Cartão");
         this.tipoCartao = tipoCartao.toUpperCase();
         this.numeroParcelas = numeroParcelas;
-        this.ultimos4Digitos = ultimos4Digitos;
+        
+        // A validação agora fica centralizada no método set
+        setUltimos4Digitos(ultimos4Digitos);
     }
 
-    // =============================================
-    // IMPLEMENTAÇÃO DOS MÉTODOS ABSTRATOS
-    // =============================================
-
-    /**
-     * Simula o processamento do cartão.
-     * Implementação específica do pagamento com cartão.
-     */
     @Override
     public String processar() {
         if (tipoCartao.equals("DEBITO")) {
@@ -46,15 +31,7 @@ public class PagamentoCartao extends Pagamento {
     public String getTipo() {
         return "Cartão (" + tipoCartao + ")";
     }
-
-    // =============================================
-    // MÉTODOS ESPECÍFICOS
-    // =============================================
-
-    /**
-     * Calcula o valor de cada parcela (apenas crédito).
-     * @return valor da parcela
-     */
+    
     public double calcularParcela() {
         if (numeroParcelas <= 0) return getValor();
         return getValor() / numeroParcelas;
@@ -81,6 +58,9 @@ public class PagamentoCartao extends Pagamento {
     }
 
     public void setUltimos4Digitos(String ultimos4Digitos) {
+        if (ultimos4Digitos == null || !ultimos4Digitos.matches("\\d{4}") || ultimos4Digitos.equals("0000")) {
+            throw new IllegalArgumentException("Os últimos 4 dígitos do cartão devem conter exatamente 4 números e não podem ser 0000.");
+        }
         this.ultimos4Digitos = ultimos4Digitos;
     }
 

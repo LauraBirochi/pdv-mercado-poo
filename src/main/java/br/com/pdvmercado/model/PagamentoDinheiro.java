@@ -1,31 +1,14 @@
 package br.com.pdvmercado.model;
 
-/**
- * Subclasse PagamentoDinheiro - herda de Pagamento
- *
- * Conceito de POO aplicado: HERANÇA + POLIMORFISMO
- * Implementa o processamento específico do pagamento em dinheiro,
- * incluindo o cálculo do troco.
- */
 public class PagamentoDinheiro extends Pagamento {
 
-    // Atributo específico do pagamento em dinheiro
     private double valorRecebido;
 
-    // Construtor
     public PagamentoDinheiro(double valor, double valorRecebido) {
         super(valor, "Pagamento em Dinheiro");
         this.valorRecebido = valorRecebido;
     }
 
-    // =============================================
-    // IMPLEMENTAÇÃO DOS MÉTODOS ABSTRATOS
-    // =============================================
-
-    /**
-     * Calcula o troco e confirma o pagamento.
-     * Implementação específica do pagamento em dinheiro.
-     */
     @Override
     public String processar() {
         double troco = valorRecebido - getValor();
@@ -40,14 +23,6 @@ public class PagamentoDinheiro extends Pagamento {
         return "Dinheiro";
     }
 
-    // =============================================
-    // MÉTODOS ESPECÍFICOS
-    // =============================================
-
-    /**
-     * Calcula o troco a ser devolvido.
-     * @return valor do troco
-     */
     public double calcularTroco() {
         return valorRecebido - getValor();
     }
