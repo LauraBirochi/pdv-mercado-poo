@@ -14,12 +14,8 @@ import java.util.ArrayList;
 
 /**
  * FuncionarioView
- *
- * Camada VIEW do padrão MVC.
- *
  * Tela de cadastro e gerenciamento de funcionários.
  * Acessível apenas por usuários com perfil GERENTE.
- * Demonstra o controle de permissões via herança (Caixa x Gerente).
  */
 public class FuncionarioView extends JFrame {
 
@@ -126,10 +122,8 @@ public class FuncionarioView extends JFrame {
         return painel;
     }
 
-    // =============================================
-    // AÇÕES
-    // =============================================
-
+    //Acoes:
+    
     private void atualizarTabela() {
         modeloTabela.setRowCount(0);
         ArrayList<Usuario> lista = sistemaController.getLoginController().listarUsuarios();
@@ -207,10 +201,8 @@ public class FuncionarioView extends JFrame {
         }
     }
 
-    // =============================================
-    // ESTILOS
-    // =============================================
-
+    //Estilos
+    
     private void estilizarTabela(JTable tabela) {
         tabela.setBackground(new Color(40, 40, 58));
         tabela.setForeground(Color.WHITE);

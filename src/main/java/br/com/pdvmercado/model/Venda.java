@@ -18,7 +18,6 @@ public class Venda {
 
     private int id;
     private ArrayList<ItemVenda> itens;     // Carrinho de compras
-    private Cliente cliente;                 // Cliente (pode ser nulo)
     private Usuario operador;               // Quem está operando o caixa
     private Pagamento pagamento;            // Forma de pagamento selecionada
     private LocalDateTime dataHora;         // Data e hora da venda
@@ -111,9 +110,6 @@ public class Venda {
         sb.append("Data: ").append(dataHora.format(
                 DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss"))).append("\n");
         sb.append("Operador: ").append(operador.getNome()).append("\n");
-        if (cliente != null) {
-            sb.append("Cliente: ").append(cliente.getNome()).append("\n");
-        }
         sb.append("-------------------------------------------\n");
         sb.append("ITENS:\n");
         for (ItemVenda item : itens) {
@@ -141,14 +137,6 @@ public class Venda {
 
     public ArrayList<ItemVenda> getItens() {
         return itens;
-    }
-
-    public Cliente getCliente() {
-        return cliente;
-    }
-
-    public void setCliente(Cliente cliente) {
-        this.cliente = cliente;
     }
 
     public Usuario getOperador() {

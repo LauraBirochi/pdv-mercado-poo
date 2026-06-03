@@ -10,25 +10,18 @@ import java.awt.*;
 import java.util.ArrayList;
 
 /**
- * ProdutoView
- *
- * Camada VIEW do padrão MVC.
- *
  * Tela de cadastro e gerenciamento de produtos.
  * Apenas gerentes podem cadastrar/remover produtos.
- * Caixas podem apenas visualizar.
  */
 public class ProdutoView extends JFrame {
 
     private SistemaController sistemaController;
 
-    // Componentes
     private JTable tabelaProdutos;
     private DefaultTableModel modeloTabela;
     private JTextField campoNome, campoPreco, campoEstoque, campoBusca;
     private boolean ehGerente;
 
-    // Construtor
     public ProdutoView(SistemaController sistemaController) {
         this.sistemaController = sistemaController;
         this.ehGerente = sistemaController.usuarioEhGerente();
@@ -149,9 +142,7 @@ public class ProdutoView extends JFrame {
         return painel;
     }
 
-    // =============================================
-    // AÇÕES
-    // =============================================
+    // Acoes
 
     private void atualizarTabela() {
         modeloTabela.setRowCount(0);
@@ -236,9 +227,7 @@ public class ProdutoView extends JFrame {
         }
     }
 
-    // =============================================
-    // ESTILOS
-    // =============================================
+    // Estilos
 
     private void estilizarTabela(JTable tabela) {
         tabela.setBackground(new Color(40, 40, 58));

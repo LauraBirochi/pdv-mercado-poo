@@ -8,14 +8,8 @@ import java.awt.event.ActionEvent;
 
 /**
  * LoginView
- *
- * Camada VIEW do padrão MVC.
- *
- * Tela de login do sistema PDV.
  * Apresenta campos de login e senha e valida com o LoginController.
- *
- * Implementado com Java Swing / JFrame.
- */
+*/
 public class LoginView extends JFrame {
 
     // Referência ao controller central
@@ -134,14 +128,8 @@ public class LoginView extends JFrame {
         campoSenha.addActionListener(this::realizarLogin);
     }
 
-    // =============================================
-    // AÇÃO DO BOTÃO LOGIN
-    // =============================================
+    // Botao de Login
 
-    /**
-     * Evento do botão "Entrar".
-     * Delega a autenticação para o LoginController (MVC).
-     */
     private void realizarLogin(ActionEvent e) {
         String login = campologin.getText().trim();
         String senha = new String(campoSenha.getPassword());
@@ -164,7 +152,7 @@ public class LoginView extends JFrame {
         }
     }
 
-    /**
+    /*
      * Fecha a tela de login e abre a tela principal do sistema.
      */
     private void abrirTelaPrincipal() {
@@ -173,9 +161,7 @@ public class LoginView extends JFrame {
         this.dispose(); // Fecha a janela de login
     }
 
-    // =============================================
-    // MÉTODOS AUXILIARES DE ESTILO
-    // =============================================
+    // Estilo
 
     private void estilizarCampo(JTextField campo) {
         campo.setBackground(new Color(55, 55, 75));

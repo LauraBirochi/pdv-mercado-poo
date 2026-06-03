@@ -11,14 +11,9 @@ import java.awt.event.ActionEvent;
 import java.util.ArrayList;
 
 /**
- * CaixaView
- *
- * Camada VIEW do padrão MVC.
- *
+ * CaixaView*
  * Tela principal do operador de caixa.
  * Permite: buscar produtos, montar carrinho, selecionar pagamento e finalizar venda.
- *
- * Esta é a tela mais importante do sistema PDV.
  */
 public class CaixaView extends JFrame {
 
@@ -44,10 +39,6 @@ public class CaixaView extends JFrame {
         iniciarVenda();
     }
 
-    // =============================================
-    // CONFIGURAÇÃO DA JANELA
-    // =============================================
-
     private void configurarJanela() {
         setTitle("PDV Mercado - Caixa | Operador: " + sistemaController.getNomeUsuarioLogado());
         setSize(950, 650);
@@ -57,9 +48,6 @@ public class CaixaView extends JFrame {
         setLayout(new BorderLayout(10, 10));
     }
 
-    // =============================================
-    // CRIAÇÃO DOS COMPONENTES
-    // =============================================
 
     private void criarComponentes() {
         // --- Barra superior ---
@@ -358,10 +346,8 @@ public class CaixaView extends JFrame {
         setJMenuBar(menuBar);
     }
 
-    // =============================================
-    // AÇÕES DO CAIXA
-    // =============================================
-
+    //Acoes do caixa:
+    
     private void iniciarVenda() {
         sistemaController.getVendaController()
                 .iniciarVenda(sistemaController.getLoginController().getUsuarioLogado());
@@ -507,10 +493,6 @@ public class CaixaView extends JFrame {
         this.dispose();
     }
 
-    // =============================================
-    // MÉTODO PÚBLICO - chamado pela PagamentoView
-    // =============================================
-
     /**
      * Chamado pela PagamentoView após finalizar a venda com sucesso.
      * Reinicia o carrinho para uma nova venda.
@@ -521,9 +503,7 @@ public class CaixaView extends JFrame {
         JOptionPane.showMessageDialog(this, "✅ Venda finalizada com sucesso!\nCarrinho reiniciado.");
     }
 
-    // =============================================
-    // ESTILOS
-    // =============================================
+    // Estilos
 
     private void estilizarCampo(JTextField campo) {
         campo.setBackground(new Color(55, 55, 75));

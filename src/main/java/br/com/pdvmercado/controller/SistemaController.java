@@ -1,17 +1,12 @@
 package br.com.pdvmercado.controller;
 
 /**
- * SistemaController
- *
- * Camada CONTROLLER do padrão MVC.
- *
- * Responsável por:
+ * Responsável por(Fachada):
  * - Inicializar todos os controllers do sistema
  * - Centralizar o acesso aos subsistemas
  * - Coordenar o fluxo geral da aplicação
  *
- * É o ponto central que conecta todas as partes do sistema.
- * A View interage com os controllers através desta classe.
+ * eh o ponto central que conecta todas as partes do sistema.
  */
 public class SistemaController {
 
@@ -27,9 +22,7 @@ public class SistemaController {
         this.vendaController = new VendaController(produtoController);
     }
 
-    // =============================================
-    // ACESSO AOS CONTROLLERS (Facade)
-    // =============================================
+    // ACESSO AOS CONTROLLERS 
 
     /**
      * Retorna o controller de login/autenticação.
@@ -41,7 +34,6 @@ public class SistemaController {
 
     /**
      * Retorna o controller de produtos.
-     * @return ProdutoController
      */
     public ProdutoController getProdutoController() {
         return produtoController;
@@ -55,13 +47,10 @@ public class SistemaController {
         return vendaController;
     }
 
-    // =============================================
-    // MÉTODOS DE CONVENIÊNCIA
-    // =============================================
+    // MÉTODOS DE CONVENIÊNCIA = operacoes atalho
 
     /**
      * Verifica se o sistema tem um usuário autenticado.
-     * @return true se há usuário logado
      */
     public boolean sistemaAutenticado() {
         return loginController.estaLogado();
@@ -69,7 +58,6 @@ public class SistemaController {
 
     /**
      * Retorna o nome do usuário logado.
-     * @return nome do usuário ou "Nenhum"
      */
     public String getNomeUsuarioLogado() {
         if (!sistemaAutenticado()) return "Nenhum";
@@ -78,7 +66,6 @@ public class SistemaController {
 
     /**
      * Retorna o perfil do usuário logado.
-     * @return perfil ("CAIXA", "GERENTE") ou "N/A"
      */
     public String getPerfilUsuarioLogado() {
         if (!sistemaAutenticado()) return "N/A";
@@ -87,7 +74,6 @@ public class SistemaController {
 
     /**
      * Verifica se o usuário logado é gerente.
-     * @return true se for gerente
      */
     public boolean usuarioEhGerente() {
         if (!sistemaAutenticado()) return false;

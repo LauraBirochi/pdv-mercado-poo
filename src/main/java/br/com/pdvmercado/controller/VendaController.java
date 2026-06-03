@@ -10,9 +10,6 @@ import java.util.ArrayList;
 
 /**
  * VendaController
- *
- * Camada CONTROLLER do padrão MVC.
- *
  * Responsável por:
  * - Gerenciar o fluxo completo de uma venda
  * - Adicionar/remover itens do carrinho
@@ -25,8 +22,8 @@ import java.util.ArrayList;
 public class VendaController implements FechamentoCaixa {
 
     private ProdutoController produtoController;
-    private Venda vendaAtual;                    // Venda em andamento
-    private ArrayList<Venda> historicoVendas;    // Todas as vendas finalizadas
+    private Venda vendaAtual;                    
+    private ArrayList<Venda> historicoVendas;    
     private int proximoIdVenda;
 
     // Construtor
@@ -36,13 +33,10 @@ public class VendaController implements FechamentoCaixa {
         this.proximoIdVenda = 1;
     }
 
-    // =============================================
-    // GERENCIAMENTO DA VENDA ATUAL
-    // =============================================
+    // Sobre a Venda Atual
 
     /**
      * Inicia uma nova venda para o operador logado.
-     * @param operador usuário que está realizando a venda
      */
     public void iniciarVenda(Usuario operador) {
         this.vendaAtual = new Venda(proximoIdVenda++, operador);
@@ -50,12 +44,6 @@ public class VendaController implements FechamentoCaixa {
 
     /**
      * Adiciona um produto ao carrinho da venda atual.
-     *
-     * Regra de negócio: verifica disponibilidade de estoque antes de adicionar.
-     *
-     * @param idProduto  ID do produto a adicionar
-     * @param quantidade quantidade desejada
-     * @return mensagem de resultado
      */
     public String adicionarItem(int idProduto, int quantidade) {
         if (vendaAtual == null) {
@@ -91,7 +79,6 @@ public class VendaController implements FechamentoCaixa {
 
     /**
      * Remove um item do carrinho pelo índice.
-     * @param indice posição na lista de itens
      */
     public void removerItem(int indice) {
         if (vendaAtual != null) {
@@ -101,7 +88,6 @@ public class VendaController implements FechamentoCaixa {
 
     /**
      * Define a forma de pagamento da venda atual.
-     * @param pagamento objeto de pagamento selecionado
      */
     public void selecionarPagamento(Pagamento pagamento) {
         if (vendaAtual != null) {
@@ -110,12 +96,9 @@ public class VendaController implements FechamentoCaixa {
     }
 
     /**
-     * Finaliza a venda atual.
-     *
-     * Regra de negócio: Dá BAIXA AUTOMÁTICA no estoque de cada produto.
-     *
-     * @return cupom fiscal ou mensagem de erro
+     * Finaliza a venda atual e da baixa automatica no estoque
      */
+    
     public String finalizarVenda() {
         if (vendaAtual == null) {
             return "Nenhuma venda em andamento.";
@@ -125,7 +108,6 @@ public class VendaController implements FechamentoCaixa {
             // Finaliza a venda (processa pagamento)
             String resultadoPagamento = vendaAtual.finalizar();
 
-            // BAIXA AUTOMÁTICA NO ESTOQUE
             // Para cada item do carrinho, reduz o estoque do produto
             for (ItemVenda item : vendaAtual.getItens()) {
                 item.getProduto().reduzirEstoque(item.getQuantidade());
@@ -157,13 +139,10 @@ public class VendaController implements FechamentoCaixa {
         }
     }
 
-    // =============================================
     // IMPLEMENTAÇÃO DA INTERFACE FechamentoCaixa
-    // =============================================
 
     /**
      * Fecha o caixa e gera relatório do turno.
-     * Implementação do método da interface FechamentoCaixa.
      */
     @Override
     public String fecharCaixa() {
@@ -184,7 +163,6 @@ public class VendaController implements FechamentoCaixa {
 
     /**
      * Calcula o total de todas as vendas do turno.
-     * Implementação do método da interface FechamentoCaixa.
      */
     @Override
     public double calcularTotalVendas() {
@@ -197,16 +175,13 @@ public class VendaController implements FechamentoCaixa {
 
     /**
      * Retorna a quantidade de vendas realizadas.
-     * Implementação do método da interface FechamentoCaixa.
      */
     @Override
     public int getTotalTransacoes() {
         return historicoVendas.size();
     }
 
-    // =============================================
-    // GETTERS
-    // =============================================
+    // getters
 
     public Venda getVendaAtual() {
         return vendaAtual;

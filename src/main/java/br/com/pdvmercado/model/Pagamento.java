@@ -1,14 +1,5 @@
 package br.com.pdvmercado.model;
 
-/**
- * Classe Abstrata Pagamento
- *
- * Conceito de POO aplicado: HERANÇA + POLIMORFISMO + ABSTRAÇÃO
- *
- * Esta classe define o contrato comum para todos os tipos de pagamento.
- * O método "processar()" é abstrato, ou seja, cada subclasse DEVE
- * implementar seu próprio comportamento de processamento.
- */
 public abstract class Pagamento {
     
     private double valor;

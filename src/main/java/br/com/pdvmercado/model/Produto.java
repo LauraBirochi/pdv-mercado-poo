@@ -1,24 +1,12 @@
 package br.com.pdvmercado.model;
 
-/**
- * Classe Produto
- *
- * Conceito de POO aplicado: ENCAPSULAMENTO
- * Os atributos são privados e só podem ser acessados/modificados
- * através dos métodos getters, setters e métodos de negócio.
- *
- * Isso garante que o estoque não seja alterado diretamente,
- * mantendo a integridade das regras do sistema.
- */
 public class Produto {
 
-    // Atributos privados - encapsulamento
     private int id;
     private String nome;
     private double preco;
     private int estoque;
 
-    // Construtor completo
     public Produto(int id, String nome, double preco, int estoque) {
         this.id = id;
         this.nome = nome;
@@ -26,15 +14,8 @@ public class Produto {
         this.estoque = estoque;
     }
 
-    // =============================================
-    // MÉTODOS DE NEGÓCIO (regras de estoque)
-    // =============================================
-
     /**
      * Reduz o estoque ao realizar uma venda.
-     * Lança exceção se a quantidade for insuficiente.
-     *
-     * @param quantidade quantidade a ser reduzida
      */
     public void reduzirEstoque(int quantidade) {
         if (quantidade <= 0) {
@@ -48,8 +29,6 @@ public class Produto {
 
     /**
      * Adiciona ao estoque (reposição de produto).
-     *
-     * @param quantidade quantidade a ser adicionada
      */
     public void adicionarEstoque(int quantidade) {
         if (quantidade <= 0) {
@@ -60,17 +39,10 @@ public class Produto {
 
     /**
      * Verifica se há estoque disponível para a quantidade solicitada.
-     *
-     * @param quantidade quantidade desejada
-     * @return true se há estoque suficiente
      */
     public boolean temEstoque(int quantidade) {
         return this.estoque >= quantidade;
     }
-
-    // =============================================
-    // GETTERS E SETTERS
-    // =============================================
 
     public int getId() {
         return id;
@@ -103,7 +75,7 @@ public class Produto {
         return estoque;
     }
 
-    // Estoque não tem setter direto - só pode ser alterado pelos métodos de negócio
+    // Estoque não tem setter direto
 
     @Override
     public String toString() {

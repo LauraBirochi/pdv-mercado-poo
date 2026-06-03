@@ -6,15 +6,10 @@ import br.com.pdvmercado.model.Gerente;
 import java.util.ArrayList;
 
 /**
- * LoginController
- * 
- * Camada CONTROLLER do padrão MVC.
- *
  * Responsável por:
  * - Gerenciar o processo de autenticação
  * - Manter a lista de usuários cadastrados (em memória, com ArrayList)
  * - Controlar qual usuário está logado
-
  */
 public class LoginController {
 

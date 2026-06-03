@@ -8,14 +8,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 
 /**
- * PagamentoView
- *
- * Camada VIEW do padrão MVC.
- *
  * Tela de seleção e processamento de pagamento.
- * Demonstra o uso de POLIMORFISMO: os três tipos de pagamento
- * são instâncias das subclasses de Pagamento, mas tratados
- * de forma uniforme pela interface.
  */
 public class PagamentoView extends JDialog {
 
@@ -50,9 +43,7 @@ public class PagamentoView extends JDialog {
         criarComponentes();
     }
 
-    // =============================================
-    // CONFIGURAÇÃO
-    // =============================================
+    // Configuracao da Janela
 
     private void configurarJanela() {
         setSize(480, 520);
@@ -62,9 +53,7 @@ public class PagamentoView extends JDialog {
         setLayout(new BorderLayout(10, 10));
     }
 
-    // =============================================
-    // COMPONENTES
-    // =============================================
+    // Componentes
 
     private void criarComponentes() {
         // --- Cabeçalho ---
@@ -197,13 +186,9 @@ public class PagamentoView extends JDialog {
         repaint();
     }
 
-    // =============================================
-    // CONFIRMAÇÃO DO PAGAMENTO (POLIMORFISMO)
-    // =============================================
 
     /**
      * Cria o objeto de pagamento correto conforme a forma selecionada.
-     * Demonstra POLIMORFISMO: todos são Pagamento, mas comportamentos distintos.
      */
     private void confirmarPagamento(ActionEvent e) {
         try {
@@ -261,9 +246,7 @@ public class PagamentoView extends JDialog {
         }
     }
 
-    // =============================================
-    // ESTILOS
-    // =============================================
+    // Estilos
 
     private JRadioButton criarRadio(String texto) {
         JRadioButton radio = new JRadioButton(texto);

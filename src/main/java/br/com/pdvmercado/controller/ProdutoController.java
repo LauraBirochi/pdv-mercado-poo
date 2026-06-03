@@ -4,10 +4,6 @@ import br.com.pdvmercado.model.Produto;
 import java.util.ArrayList;
 
 /**
- * ProdutoController
- *
- * Camada CONTROLLER do padrão MVC.
- *
  * Responsável por:
  * - CRUD de produtos (Create, Read, Update, Delete)
  * - Gerenciamento do estoque
@@ -28,13 +24,6 @@ public class ProdutoController {
         cadastrarProdutosPadrao();
     }
 
-    // =============================================
-    // PRODUTOS PADRÃO PARA DEMONSTRAÇÃO
-    // =============================================
-
-    /**
-     * Popula o sistema com produtos de exemplo para testes.
-     */
     private void cadastrarProdutosPadrao() {
         cadastrarProduto(new Produto(proximoId++, "Arroz 5kg",      8.99,  50));
         cadastrarProduto(new Produto(proximoId++, "Feijão 1kg",     6.50,  40));
@@ -46,15 +35,6 @@ public class ProdutoController {
         cadastrarProduto(new Produto(proximoId++, "Sal 1kg",        2.00,  90));
     }
 
-    // =============================================
-    // OPERAÇÕES CRUD
-    // =============================================
-
-    /**
-     * Cadastra um novo produto.
-     * @param produto produto a ser cadastrado
-     * @return true se cadastrou com sucesso
-     */
     public boolean cadastrarProduto(Produto produto) {
         // Verifica se já existe produto com mesmo ID
         for (Produto p : produtos) {
@@ -68,11 +48,6 @@ public class ProdutoController {
 
     /**
      * Cria e cadastra um novo produto com os dados fornecidos.
-     *
-     * @param nome     nome do produto
-     * @param preco    preço unitário
-     * @param estoque  quantidade inicial em estoque
-     * @return produto criado
      */
     public Produto novoProduto(String nome, double preco, int estoque) {
         Produto p = new Produto(proximoId++, nome, preco, estoque);
@@ -82,8 +57,6 @@ public class ProdutoController {
 
     /**
      * Busca um produto pelo ID.
-     * @param id ID do produto
-     * @return produto encontrado ou null
      */
     public Produto buscarPorId(int id) {
         for (Produto p : produtos) {
@@ -96,8 +69,6 @@ public class ProdutoController {
 
     /**
      * Busca produtos pelo nome (busca parcial, ignora maiúsculas/minúsculas).
-     * @param nome trecho do nome a pesquisar
-     * @return lista de produtos encontrados
      */
     public ArrayList<Produto> buscarPorNome(String nome) {
         ArrayList<Produto> resultado = new ArrayList<>();
@@ -111,10 +82,6 @@ public class ProdutoController {
 
     /**
      * Atualiza os dados de um produto existente.
-     * @param id     ID do produto a atualizar
-     * @param nome   novo nome
-     * @param preco  novo preço
-     * @return true se atualizou com sucesso
      */
     public boolean atualizarProduto(int id, String nome, double preco) {
         Produto p = buscarPorId(id);
@@ -126,21 +93,13 @@ public class ProdutoController {
 
     /**
      * Remove um produto pelo ID.
-     * @param id ID do produto a remover
-     * @return true se removeu com sucesso
      */
     public boolean removerProduto(int id) {
         return produtos.removeIf(p -> p.getId() == id);
     }
 
-    // =============================================
-    // OPERAÇÕES DE ESTOQUE
-    // =============================================
-
     /**
      * Adiciona quantidade ao estoque de um produto.
-     * @param id        ID do produto
-     * @param quantidade quantidade a adicionar
      * @return true se operação foi realizada
      */
     public boolean reporEstoque(int id, int quantidade) {
@@ -152,15 +111,13 @@ public class ProdutoController {
 
     /**
      * Lista todos os produtos cadastrados.
-     * @return lista completa de produtos
      */
     public ArrayList<Produto> listarTodos() {
         return produtos;
     }
 
     /**
-     * Lista apenas produtos com estoque baixo (menos de 10 unidades).
-     * @return lista de produtos com estoque crítico
+     * Lista apenas produtos com estoque baixo
      */
     public ArrayList<Produto> listarEstoqueBaixo() {
         ArrayList<Produto> resultado = new ArrayList<>();

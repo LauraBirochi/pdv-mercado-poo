@@ -2,36 +2,21 @@ package br.com.pdvmercado.model;
 
 /**
  * Classe ItemVenda
- *
- * Representa um item dentro do carrinho de compras.
- * Associa um Produto a uma quantidade e calcula o subtotal.
  */
 public class ItemVenda {
 
     private Produto produto;
     private int quantidade;
 
-    // Construtor
     public ItemVenda(Produto produto, int quantidade) {
         this.produto = produto;
         this.quantidade = quantidade;
     }
 
-    // =============================================
-    // MÉTODO DE NEGÓCIO
-    // =============================================
-
-    /**
-     * Calcula o subtotal deste item (preço x quantidade).
-     * @return subtotal do item
-     */
+    
     public double calcularSubtotal() {
         return produto.getPreco() * quantidade;
     }
-
-    // =============================================
-    // GETTERS E SETTERS
-    // =============================================
 
     public Produto getProduto() {
         return produto;
