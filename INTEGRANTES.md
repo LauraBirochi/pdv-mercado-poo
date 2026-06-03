@@ -10,7 +10,7 @@ Este documento apresenta a equipe de desenvolvimento responsável pelo projeto a
 | :---: | :--- | :--- | :--- |
 | <img src="https://github.com/LauraBirochi.png" width="60" height="60" style="border-radius:50%"/> | **Laura Birochi** | laura.birochi@aluno.ifsp.edu.br | [@LauraBirochi](https://github.com/LauraBirochi) |
 | <img src="https://github.com/GabCespedes.png" width="60" height="60" style="border-radius:50%"/> | **Gabriella Céspedes** | g.cespedes@aluno.ifsp.edu.br | [@GabCespedes](https://github.com/GabCespedes) |
-| <img src="https://github.com/carolzita-11.png" width="60" height="60" style="border-radius:50%"/> | **Caroline Eleno** | caroline.eleno@aluno.ifsp.edu.br | [@carolzita-11](https://github.com/carolzita-11) |
+| <img src="https://github.com/CarolineEleno.png" width="60" height="60" style="border-radius:50%"/> | **Caroline Eleno** | caroline.eleno@aluno.ifsp.edu.br | [@CarolineEleno](https://github.com/CarolineEleno) |
 | - | **Heitor Vilas Boas** | heitor.vilasboas@aluno.ifsp.edu.br | - |
 
 ---
